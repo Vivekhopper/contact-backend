@@ -1,6 +1,6 @@
 import express from "express";
 import { Register, Login, auth } from "../controllers/userController.js";
-import { verifyUser } from "../middleware/verifyUser.js";
+import { verifyUser } from "../middleware/VerifyUser.js";
 import { createContact, getContacts,getContact,updateContact ,deletContact} from "../controllers/contactController.js";
 
 const router = express.Router();
