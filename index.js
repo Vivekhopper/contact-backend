@@ -1,54 +1,38 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import Connection from "./config/DbConnection.js";
-import Router from "./routes/routes.js";
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import Connection from './config/DbConnection.js';
+import Router from './routes/routes.js';
 
-// dotenv.config({ path: "./config/.env" });
+// Load environment variables from .env file
 dotenv.config();
 
-
 const app = express();
+const port = process.env.PORT || 3000;
+
+// Middleware to parse JSON requests
 app.use(express.json());
 
+// CORS configuration
 const allowedOrigins = [
-  "https://contact-front-end-fawn.vercel.app",
+  'https://contact-front-end-fawn.vercel.app',
 ];
 
 app.use(cors({
-  // origin: (origin, callback) => {
-  //   if (!origin) return callback(null, true);
-  //   if (allowedOrigins.indexOf(origin) === -1) {
-  //     const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-  //     return callback(new Error(msg), false);
-  //   }
-  //   return callback(null, true);
-  // },
-  // methods: ["GET", "PUT", "POST", "DELETE"],
-  origin:"https://contact-front-end-fawn.vercel.app",
+  origin: allowedOrigins,
   credentials: true,
 }));
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://contact-front-end-fawn.vercel.app");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   if (req.method === "OPTIONS") {
-//     res.sendStatus(200);
-//   } else {
-//     next();
-//   }
-// });
+// Use routes
+app.use('/contact', Router);
 
-app.use("/contact", Router);
-
+// Connect to the database and start the server
 Connection()
   .then(() => {
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is running on port ${process.env.PORT}`);
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
     });
   })
   .catch((err) => {
-    console.error("Failed to connect to the database:", err);
+    console.error('Failed to connect to the database:', err);
   });
