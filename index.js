@@ -4,7 +4,9 @@ import cors from "cors";
 import Connection from "./config/DbConnection.js";
 import Router from "./routes/routes.js";
 
-dotenv.config({ path: "./config/.env" });
+// dotenv.config({ path: "./config/.env" });
+dotenv.config();
+
 
 const app = express();
 app.use(express.json());
@@ -14,29 +16,30 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  methods: ["GET", "PUT", "POST", "DELETE"],
+  // origin: (origin, callback) => {
+  //   if (!origin) return callback(null, true);
+  //   if (allowedOrigins.indexOf(origin) === -1) {
+  //     const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+  //     return callback(new Error(msg), false);
+  //   }
+  //   return callback(null, true);
+  // },
+  // methods: ["GET", "PUT", "POST", "DELETE"],
+  origin:"https://contact-front-end-fawn.vercel.app",
   credentials: true,
 }));
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://contact-front-end-fawn.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
-  res.header("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "https://contact-front-end-fawn.vercel.app");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   if (req.method === "OPTIONS") {
+//     res.sendStatus(200);
+//   } else {
+//     next();
+//   }
+// });
 
 app.use("/contact", Router);
 
