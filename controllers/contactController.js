@@ -1,4 +1,4 @@
-import express from "express"
+// import express from "express"
 import { ContactModel } from "../models/contact.js"
 
 export const createContact=async(req,res)=>{

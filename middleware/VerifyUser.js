@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { UserModel } from "../models/user.js";
-import dotenv from "dotenv";
-dotenv.config({ path: "./config/.env" });
+// import dotenv from "dotenv";
+// dotenv.config({ path: "./config/.env" });
 export const verifyUser = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
