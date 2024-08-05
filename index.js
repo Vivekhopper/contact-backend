@@ -15,7 +15,7 @@ app.use(express.json());
 
 // CORS configuration
 const allowedOrigins = [
-  'https://contact-front-end-fawn.vercel.app',
+  'https://contact-front-end-fawn.vercel.app/',
 ];
 
 app.use(cors({
